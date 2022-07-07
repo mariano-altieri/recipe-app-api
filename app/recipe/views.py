@@ -28,7 +28,8 @@ from recipe import serializers
             OpenApiParameter(
                 'ingredients',
                 OpenApiTypes.STR,
-                description='Comma separated list of ingredients IDs to filter',
+                description="""Comma separated list of
+                 ingredients IDs to filter""",
             ),
         ]
     )
@@ -117,7 +118,9 @@ class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
         if assigned_only:
             queryset = queryset.filter(recipe__isnull=False)
 
-        return queryset.filter(user=self.request.user).order_by('-name').distinct()
+        return queryset.filter(
+            user=self.request.user
+        ).order_by('-name').distinct()
 
 
 class TagViewSet(BaseRecipeAttrViewSet):
